@@ -2,6 +2,8 @@
 
 .puzzle {
     display: table;
+    background-color: black;
+    padding: 5px;
 }
 
 .row-1,
@@ -31,9 +33,10 @@
 .piece-16 {
     width: 100px;
     height: 100px;
-    background-image: url(/assets/img/juice-and-leafs.png);
+    background-image: url(/assets/img/mcmainSoftwareLogo.png);
+    background-size: 400px;
     display: table-cell;
-    border: solid white 1px;
+    border: solid black 1px;
     border-top: none;
     border-left: none;
 }
@@ -43,7 +46,7 @@
 
 .piece-16 {
     background-image: none;
-    background-color: white;
+    background-color: lightgray;
 }
 
 

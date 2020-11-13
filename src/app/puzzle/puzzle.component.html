@@ -6,5 +6,10 @@
 <div>
     <p>Moves: {{moves}}</p>
     <p>Timer: {{time * 1000 | date:'mm:ss'}}</p>
-    <p>Score: {{score | number}}pt</p>
+    <p>Score: {{score | number}}pts</p>
+</div>
+
+<div *ngIf="hasEnded">
+    <a *ngIf="score > 0"><strong>You won with {{score | number}}pts !!!</strong></a>
+    <a *ngIf="score <= 0"><strong>You lost because you ran out of points!</strong></a>
 </div>

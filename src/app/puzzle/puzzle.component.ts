@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { timer } from "rxjs";
 
+export class Piece {
+  id: number;
+  row: number;
+  pos: number;
+}
+
 @Component({
   selector: 'app-puzzle',
   templateUrl: './puzzle.component.html',
@@ -10,13 +16,13 @@ export class PuzzleComponent implements OnInit {
 
   constructor() { }
 
-  moves = 0;
-  time = 0;
-  score = 100000;
-  isRunning = false;
-  hasEnded = false;
+  moves: number = 0;
+  time: number = 0;
+  score: number = 500;
+  isRunning: boolean = false;
+  hasEnded: boolean = false;
 
-  puzzlePieces = [
+  puzzlePieces: Piece[][] = [
     [
       { "id": 1, "row": 1, "pos": 1 },
       { "id": 2, "row": 1, "pos": 2 },
@@ -44,8 +50,8 @@ export class PuzzleComponent implements OnInit {
   ]
 
   // get List of all pieces
-  getIdList() {
-    var pieceList = [];
+  getIdList(): number[] {
+    var pieceList: number[] = [];
     for (let row of this.puzzlePieces) {
       for (let pieces of row) {
         pieceList.push(pieces.id);
@@ -54,14 +60,14 @@ export class PuzzleComponent implements OnInit {
     return pieceList;
   }
 
-  shuffleArray(pieceList) {
+  shuffleArray(pieceList: number[]): number[] {
     // return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,15];
     return pieceList.sort(() => .5 - Math.random());
   }
 
-  getInversions(array) {
-    var count = array.length;
-    var inv_count = 0;
+  getInversions(array: number[]): number {
+    var count: number = array.length;
+    var inv_count: number = 0;
     for (let i = 0; i < count - 1; i++) {
       for (let j = i + 1; j < count; j++) {
         if (array[i] > array[j]) {
@@ -72,29 +78,23 @@ export class PuzzleComponent implements OnInit {
     return inv_count;
   }
 
-  isEven(value: number) {
-    if (value % 2 == 0) {
-      return true;
-    } else {
-      return false;
-    }
+  isEven(value: number): boolean {
+    return (value % 2 == 0);
   }
 
-  checkSolvability(pieceList) {
-    var inversions = this.getInversions(pieceList);
-    var blankPiece = this.getPieceInfo(16);
-    if (this.isEven(blankPiece.pos) && !this.isEven(inversions) || !this.isEven(blankPiece.pos) && this.isEven(inversions)) {
-      return true;
-    } else {
-      return false;
-    }
+  checkSolvability(pieceList: number[]): boolean {
+    var inversions: number = this.getInversions(pieceList);
+    var blankPiece: Piece = this.getPieceInfo(16);
+    return (this.isEven(blankPiece.pos) && !this.isEven(inversions) || !this.isEven(blankPiece.pos) && this.isEven(inversions));
   }
 
-  buildGame() {
-    var pieces = this.getIdList();
-    var randomizedPieces = this.shuffleArray(pieces);
+
+
+  buildGame(): void {
+    var pieces: number[] = this.getIdList();
+    var randomizedPieces: number[] = this.shuffleArray(pieces);
     if (this.checkSolvability(randomizedPieces)) {
-      var i = 0;
+      var i: number = 0;
       for (let row of this.puzzlePieces) {
         for (let pieces of row) {
           pieces.id = randomizedPieces[i];
@@ -108,35 +108,35 @@ export class PuzzleComponent implements OnInit {
 
   }
 
-  gameOver() {
+  gameOver(): void {
     this.endGame();
-    this.score = 0;
   }
 
-  endGame() {
+  endGame(): void {
     this.hasEnded = true
     this.isRunning = false
     if (this.score < 0) {
-      alert(`You ran out of points!`);
+      // alert(`You ran out of points!`);
     } else {
-      alert(`You finished the puzzle!\nScore: ${this.score}`);
+      // alert(`You finished the puzzle!\nScore: ${this.score}`);
     }
   }
 
-  checkGameStatus() {
-    var i = 1;
-    var correctPieces = 0;
+  checkGameStatus(): void {
+    var i: number = 0;
+    var correctPieces: number = 0;
     for (let row of this.puzzlePieces) {
       for (let pieces of row) {
+        i++;
         if (pieces.id == i) {
           correctPieces++;
         } else {
           return;
         }
-        i++;
+        console.log(i);
       }
     }
-    if (correctPieces == 16) {
+    if (correctPieces == i) {
       this.endGame();
     }
   }
@@ -149,7 +149,6 @@ export class PuzzleComponent implements OnInit {
     timer(0, 100).subscribe(ellapsedCycles => {
       if (this.isRunning) {
         this.score -= 1;
-        this.checkGameStatus();
         if (this.score < 0) {
           this.endGame();
         }
@@ -163,16 +162,16 @@ export class PuzzleComponent implements OnInit {
     });
   }
 
-  startTimer() {
+  startTimer(): void {
     this.isRunning = true;
   }
 
-  getPieces() {
+  getPieces(): Piece[][] {
     return this.puzzlePieces;
   }
 
 
-  findIdInArray(pieceList: any, query: any) {
+  findIdInArray(pieceList: Piece[][], query: number) {
     for (let i = 0; i < pieceList.length; i++) {
       for (let j = 0; j < pieceList[i].length; j++)
         if (pieceList[i][j].id == query) {
@@ -181,29 +180,15 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  getPieceInfo(pieceId: number) {
+  getPieceInfo(pieceId: number): Piece {
     return this.findIdInArray(this.getPieces(), pieceId);
   }
 
-  swapPieces(clickedPiece: any, blankPiece: any) {
+  swapPieces(clickedPiece: any, blankPiece: any): void {
     this.moves++;
     this.score -= 100;
-    var tempPiece = clickedPiece;
-    var tempBlank = blankPiece;
-    // Loop thru Puzzple Pieces
-    // for (let i = 0; i < puzzle.length; i++) {
-    //   for (let j = 0; j < puzzle[i].length; i++) {
-    //     // Search for clickedPiece
-    //     if (puzzle[i][j].id == clickedPiece.id) {
-    //       // Change clicked piece id to blank id;
-    //       this.puzzlePieces[i][j].id = tempBlank.id;
-    //       // Search for blank piece5
-    //     } else if (puzzle[i][j].id == blankPiece.id) {
-    //       // Change blank piece id to clicked id
-    //       this.puzzlePieces[i][j].id = tempPiece.id;
-    //     }
-    //   }
-    // }
+    var tempPiece: Piece = clickedPiece;
+    var tempBlank: Piece = blankPiece;
     for (let row of this.puzzlePieces) {
       for (let piece of row) {
         if (piece.id == clickedPiece.id) {
@@ -215,8 +200,8 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  checkPieceProximity(clickedPiece: any) {
-    let blankPiece = this.getPieceInfo(16);
+  checkPieceProximity(clickedPiece: any): void {
+    let blankPiece: Piece = this.getPieceInfo(16);
     if (clickedPiece.row == blankPiece.row) {
       if (clickedPiece.pos + 1 == blankPiece.pos || clickedPiece.pos - 1 == blankPiece.pos) {
         this.swapPieces(clickedPiece, blankPiece);
@@ -228,12 +213,13 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  pieceEvent(pieceId: any) {
+  pieceEvent(pieceId: any): void {
     if (!this.hasEnded) {
       this.startTimer();
-      let clickedPieceInfo = this.getPieceInfo(pieceId);
+      let clickedPieceInfo: Piece = this.getPieceInfo(pieceId);
       this.checkPieceProximity(clickedPieceInfo);
-    }
+      this.checkGameStatus();
+    };
   }
 
 
