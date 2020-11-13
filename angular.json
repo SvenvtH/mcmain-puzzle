@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mcmain-puzzle"
+    }
+  },
+  "defaultProject": "mcmain-puzzle",
+  "cli": {
+    "analytics": "b130c22b-f767-441a-8229-928391c29b0f"
+  }
 }

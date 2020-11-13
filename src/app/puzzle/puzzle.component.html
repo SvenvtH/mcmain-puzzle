@@ -1,0 +1,10 @@
+<div class="puzzle">
+    <div class="row-{{row[0].row}}" *ngFor="let row of puzzlePieces">
+        <div *ngFor="let piece of row" class="piece-{{piece.id}}" (click)="pieceEvent(piece.id, piece.row)"></div>
+    </div>
+</div>
+<div>
+    <p>Moves: {{moves}}</p>
+    <p>Timer: {{time * 1000 | date:'mm:ss'}}</p>
+    <p>Score: {{score | number}}pt</p>
+</div>

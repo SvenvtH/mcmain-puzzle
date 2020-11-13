@@ -1,0 +1,110 @@
+/* Table Styling */
+
+.puzzle {
+    display: table;
+}
+
+.row-1,
+.row-2,
+.row-3,
+.row-4 {
+    display: table-row;
+}
+
+
+
+.piece-1,
+.piece-2,
+.piece-3,
+.piece-4,
+.piece-5,
+.piece-6,
+.piece-7,
+.piece-8,
+.piece-9,
+.piece-10,
+.piece-11,
+.piece-12,
+.piece-13,
+.piece-14,
+.piece-15,
+.piece-16 {
+    width: 100px;
+    height: 100px;
+    background-image: url(/assets/img/juice-and-leafs.png);
+    display: table-cell;
+    border: solid white 1px;
+    border-top: none;
+    border-left: none;
+}
+
+
+/* Blank piece */
+
+.piece-16 {
+    background-image: none;
+    background-color: white;
+}
+
+
+/* Pieces cutter */
+
+.piece-1 {
+    background-position: 0px 0px;
+}
+
+.piece-2 {
+    background-position: -100px 0px;
+}
+
+.piece-3 {
+    background-position: -200px 0px;
+}
+
+.piece-4 {
+    background-position: -300px 0px;
+}
+
+.piece-5 {
+    background-position: 0px -100px;
+}
+
+.piece-6 {
+    background-position: -100px -100px;
+}
+
+.piece-7 {
+    background-position: -200px -100px;
+}
+
+.piece-8 {
+    background-position: -300px -100px;
+}
+
+.piece-9 {
+    background-position: 0px -200px;
+}
+
+.piece-10 {
+    background-position: -100px -200px;
+}
+
+.piece-11 {
+    background-position: -200px -200px;
+}
+
+.piece-12 {
+    background-position: -300px -200px;
+}
+
+.piece-13 {
+    background-position: 0px -300px;
+}
+
+.piece-14 {
+    background-position: -100px -300px;
+}
+
+.piece-15 {
+    background-position: -200px -300px;
+}
