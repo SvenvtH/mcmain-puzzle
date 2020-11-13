@@ -18,7 +18,7 @@ export class PuzzleComponent implements OnInit {
 
   moves: number = 0;
   time: number = 0;
-  score: number = 500;
+  score: number = 500000;
   isRunning: boolean = false;
   hasEnded: boolean = false;
 
